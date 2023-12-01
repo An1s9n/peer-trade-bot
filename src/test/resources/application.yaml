@@ -1,0 +1,30 @@
+"%test":
+
+  binance:
+    base-url: "${binance-mock-server.base-url}"
+    advs-per-page: 2
+
+  telegram-bot:
+    base-url-override: "${telegram-bot-mock-server.base-url}/bot"
+    token: "tg-bot-token-test"
+
+  notification:
+    health-cron: "* * * ? * * *"
+    changes-cron: "* * * ? * * *"
+    settings:
+      telegram-chat-id: 123
+      trades:
+        - id: "trade-id-test-1"
+          telegram-thread-id: 1
+          merchant-only: true
+          type: "buy"
+          fiat: "usd"
+          asset: "usdt"
+          threshold-inclusive: 1.015
+          bank: "bank-of-georgia"
+
+  quarkus:
+    log:
+      category:
+        "ru.an1s9n.peertradebot":
+          level: DEBUG

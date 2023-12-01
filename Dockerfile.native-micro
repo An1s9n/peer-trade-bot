@@ -1,0 +1,19 @@
+## Stage 1: build native executable using gradle builder image with native capabilities
+FROM quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-21 AS build
+USER root
+RUN microdnf install findutils
+WORKDIR /code
+COPY gradlew /code/gradlew
+COPY gradle /code/gradle
+COPY build.gradle.kts /code/
+COPY settings.gradle.kts /code/
+COPY gradle.properties /code/
+COPY src /code/src
+RUN ./gradlew build -Dquarkus.package.type=native
+
+## Stage 2: create the final Docker image
+FROM quay.io/quarkus/quarkus-micro-image:2.0
+WORKDIR /work/
+COPY --from=build /code/build/*-runner /work/application
+RUN chmod 775 /work
+ENTRYPOINT ["./application"]

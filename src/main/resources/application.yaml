@@ -1,0 +1,41 @@
+binance:
+  base-url: "https://p2p.binance.com"
+  advs-per-page: 5
+
+telegram-bot:
+  base-url-override: null
+# token: <required>
+
+notification:
+  health-cron: "0 0 6 ? * * *"
+  changes-cron: "0/5 * * ? * * *"
+  settings:
+#   telegram-chat-id: <required>
+#   trades: <at least 1 trade required, see dev profile below for example>
+
+# Framework configs
+binance/mp-rest/url: ${binance.base-url}
+
+"%dev":
+
+  telegram-bot:
+    token: <paste-dev-telegram-bot-token-here>
+
+  notification:
+    settings:
+      telegram-chat-id: <paste-dev-telegram-chat-id-here>
+      trades:
+        - id: "GE-BOG: USD -> USDT"
+          telegram-thread-id: 62
+          merchant-only: true
+          type: "buy"
+          fiat: "usd"
+          asset: "usdt"
+          threshold-inclusive: 1.015
+          bank: "bank-of-georgia"
+
+  quarkus:
+    log:
+      category:
+        "ru.an1s9n.peertradebot":
+          level: DEBUG

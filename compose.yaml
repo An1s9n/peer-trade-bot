@@ -1,0 +1,15 @@
+services:
+  peer-trade-bot:
+    image: "ru.an1s9n/peer-trade-bot:1.0.0"
+    container_name: "peer-trade-bot-1"
+    restart: "on-failure"
+    volumes:
+      - "./config:/work/config"
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.05"
+          memory: "16m"
+        limits:
+          cpus: "0.5"
+          memory: "32m"
